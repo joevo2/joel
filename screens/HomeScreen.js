@@ -9,9 +9,9 @@ export default class HomeScreen extends React.Component {
 
   state = { data: null, location: null };
 
-  componentDidMount() {
-    this.getWeatherData();
-  }
+  // componentDidMount() {
+  //   this.getWeatherData();
+  // }
 
   getWeatherData = async () => {
     const location = await this.getLocationAsync();
@@ -20,7 +20,7 @@ export default class HomeScreen extends React.Component {
       const data = await fetch(
         `https://api.darksky.net/forecast/bb14c0a3ab50cea1374f560ff25bdae0/${latitude},${longitude}/?units=auto`
       ).then(res => res.json());
-      this.setState({ data: data.currently });
+      this.setState({ data });
     } else {
       this.setState({ error: "Unable to get device location" });
     }
@@ -42,8 +42,8 @@ export default class HomeScreen extends React.Component {
         <Button title="Reload" onPress={this.getWeatherData} />
         {data && (
           <View>
-            <Text>{data.summary}</Text>
-            <Text>{data.temperature}</Text>
+            <Text>{data.currently.summary}</Text>
+            <Text>{data.currently.temperature}</Text>
           </View>
         )}
         <Text>Weather: {JSON.stringify(data)}</Text>
